@@ -1,10 +1,16 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 // Register View Engine
 app.set("view engine", "ejs");
 
 app.listen(3000);
+
+// moddleware & static files
+app.use(express.static("public"));
+
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   const blogs = [
