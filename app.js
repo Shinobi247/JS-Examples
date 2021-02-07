@@ -1,25 +1,29 @@
 const express = require("express");
 const app = express();
 
+// Register View Engine
+app.set("view engine", "ejs");
+
 app.listen(3000);
 
 app.get("/", (req, res) => {
-  //   res.send("<p>Home Page</p>");
-  res.sendFile("./views/index.html", { root: __dirname });
+  const blogs = [
+    { title: "Blog 1", snippet: "Snippet 1" },
+    { title: "Blog 2", snippet: "Snippet 2" },
+    { title: "Blog 3", snippet: "Snippet 3" },
+  ];
+  res.render("index", { title: "Home", blogs });
 });
 
 app.get("/about", (req, res) => {
-  //   res.send("<p>Home Page</p>");
-  res.sendFile("./views/about.html", { root: __dirname });
+  res.render("about", { title: "About" });
 });
 
-// Redirect
-app.get("/about-us", (req, res) => {
-  //   res.send("<p>Home Page</p>");
-  res.redirect("/about");
+app.get("/blogs/create", (req, res) => {
+  res.render("create", { title: "New Blog" });
 });
 
 // 404
 app.use((req, res) => {
-  res.status(404).sendFile("./views/404.html", { root: __dirname });
+  res.status(404).render("404", { title: "Error" });
 });
